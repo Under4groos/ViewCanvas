@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -117,7 +116,7 @@ namespace ViewCanvas.View
             Matrix scaleMatrix = _transform.Matrix;
             scaleMatrix.ScaleAt(scaleFactor, scaleFactor, mousePostion.X, mousePostion.Y);
             _transform.Matrix = scaleMatrix;
-            Debug.WriteLine(scaleFactor);
+
 
             foreach (UIElement child in Children.AsParallel())
             {
