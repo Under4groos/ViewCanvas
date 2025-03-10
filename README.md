@@ -1,5 +1,5 @@
 
-![enter image description here](assets\\jDgr0wi4QS.gif)
+![enter image description here](https://raw.githubusercontent.com/Under4groos/ViewCanvas/refs/heads/master/assets/jDgr0wi4QS.gif)
 
 Source code 
 ```xml
