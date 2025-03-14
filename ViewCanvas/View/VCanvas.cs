@@ -2,30 +2,29 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-
 namespace ViewCanvas.View
 {
     public class VCanvas : Canvas
     {
-
+        public event Callbacks.SelectionChangedEventHandler? SelectionChanged;
 
         private readonly MatrixTransform _transform = new MatrixTransform();
         private Point _initialMousePosition;
         private Point elementPosition;
         private bool _dragging;
-        private UIElement? _selectedElement;
+
         private Vector _draggingDelta;
         public float Zoomfactor { get; set; } = 1.1f;
 
-
-
-
-        public VCanvas()
+        public UIElement? SelectedElement
         {
-
+            get; private set;
         }
 
-
+        protected virtual void OnSelectionChanged(VCanvas vCanvas, UIElement? uIElement)
+        {
+            SelectionChanged?.Invoke(vCanvas, uIElement);
+        }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
@@ -38,10 +37,13 @@ namespace ViewCanvas.View
             {
                 if (Children.Contains((UIElement)e.Source))
                 {
-                    _selectedElement = (UIElement)e.Source;
+                    SelectedElement = (UIElement)e.Source;
+
+                    OnSelectionChanged(this, SelectedElement);
+
                     Point mousePosition = Mouse.GetPosition(this);
-                    double x = Canvas.GetLeft(_selectedElement);
-                    double y = Canvas.GetTop(_selectedElement);
+                    double x = Canvas.GetLeft(SelectedElement);
+                    double y = Canvas.GetTop(SelectedElement);
                     elementPosition = new Point(x, y);
                     _draggingDelta = elementPosition - mousePosition;
                 }
@@ -70,10 +72,10 @@ namespace ViewCanvas.View
                 double x = Mouse.GetPosition(this).X;
                 double y = Mouse.GetPosition(this).Y;
 
-                if (_selectedElement != null)
+                if (SelectedElement != null)
                 {
-                    Canvas.SetLeft(_selectedElement, x + _draggingDelta.X);
-                    Canvas.SetTop(_selectedElement, y + _draggingDelta.Y);
+                    Canvas.SetLeft(SelectedElement, x + _draggingDelta.X);
+                    Canvas.SetTop(SelectedElement, y + _draggingDelta.Y);
                 }
             }
 
@@ -83,7 +85,7 @@ namespace ViewCanvas.View
         protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
         {
             _dragging = false;
-            _selectedElement = null;
+            SelectedElement = null;
             base.OnPreviewMouseDown(e);
         }
 
