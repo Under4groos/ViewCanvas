@@ -7,13 +7,26 @@ namespace ViewCanvas.View
 {
     public class VCanvas : Canvas
     {
+
+
         private readonly MatrixTransform _transform = new MatrixTransform();
         private Point _initialMousePosition;
-
+        private Point elementPosition;
         private bool _dragging;
         private UIElement? _selectedElement;
         private Vector _draggingDelta;
         public float Zoomfactor { get; set; } = 1.1f;
+
+
+
+
+        public VCanvas()
+        {
+
+        }
+
+
+
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Middle)
@@ -29,7 +42,7 @@ namespace ViewCanvas.View
                     Point mousePosition = Mouse.GetPosition(this);
                     double x = Canvas.GetLeft(_selectedElement);
                     double y = Canvas.GetTop(_selectedElement);
-                    Point elementPosition = new Point(x, y);
+                    elementPosition = new Point(x, y);
                     _draggingDelta = elementPosition - mousePosition;
                 }
                 _dragging = true;
