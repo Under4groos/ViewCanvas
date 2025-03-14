@@ -7,7 +7,7 @@ namespace ViewCanvas.View
     public class VCanvas : Canvas
     {
         public event Callbacks.SelectionChangedEventHandler? SelectionChanged;
-
+        public event Callbacks.MouseChangedEventHandler? MouseChanged;
         private readonly MatrixTransform _transform = new MatrixTransform();
         private Point _initialMousePosition;
         private Point elementPosition;
@@ -15,6 +15,11 @@ namespace ViewCanvas.View
 
         private Vector _draggingDelta;
         public float Zoomfactor { get; set; } = 1.1f;
+
+        public Point MousePosition
+        {
+            get; private set;
+        }
 
         public UIElement? SelectedElement
         {
@@ -44,6 +49,7 @@ namespace ViewCanvas.View
                     Point mousePosition = Mouse.GetPosition(this);
                     double x = Canvas.GetLeft(SelectedElement);
                     double y = Canvas.GetTop(SelectedElement);
+
                     elementPosition = new Point(x, y);
                     _draggingDelta = elementPosition - mousePosition;
                 }
@@ -54,10 +60,13 @@ namespace ViewCanvas.View
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            MousePosition = _transform.Inverse.Transform(e.GetPosition(this));
+            MouseChanged?.Invoke(this, MousePosition);
+
             if (e.MiddleButton == MouseButtonState.Pressed)
             {
-                Point mousePosition = _transform.Inverse.Transform(e.GetPosition(this));
-                Vector delta = Point.Subtract(mousePosition, _initialMousePosition);
+
+                Vector delta = Point.Subtract(MousePosition, _initialMousePosition);
                 var translate = new TranslateTransform(delta.X, delta.Y);
                 _transform.Matrix = translate.Value * _transform.Matrix;
 
