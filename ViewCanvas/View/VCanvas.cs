@@ -5,10 +5,7 @@ using System.Windows.Media;
 
 namespace ViewCanvas.View
 {
-    /// <summary>
-    /// Логика взаимодействия для VCanvas.xaml
-    /// </summary>
-    public partial class VCanvas : Canvas
+    public class VCanvas : Canvas
     {
         private readonly MatrixTransform _transform = new MatrixTransform();
         private Point _initialMousePosition;
@@ -16,24 +13,7 @@ namespace ViewCanvas.View
         private bool _dragging;
         private UIElement? _selectedElement;
         private Vector _draggingDelta;
-
-
-
-
-
-        public VCanvas()
-        {
-            InitializeComponent();
-
-        }
-
-
-
         public float Zoomfactor { get; set; } = 1.1f;
-
-
-
-
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Middle)

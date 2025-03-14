@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Copyright>MIT</Copyright>
+    <RepositoryUrl>https://github.com/Under4groos/ViewCanvas</RepositoryUrl>
+    <PackageTags>Canvas, wpf</PackageTags>
   </PropertyGroup>
 
 </Project>
