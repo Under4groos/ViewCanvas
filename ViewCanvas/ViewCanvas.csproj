@@ -8,6 +8,7 @@
     <Copyright>MIT</Copyright>
     <RepositoryUrl>https://github.com/Under4groos/ViewCanvas</RepositoryUrl>
     <PackageTags>Canvas, wpf</PackageTags>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
